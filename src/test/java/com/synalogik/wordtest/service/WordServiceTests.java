@@ -103,6 +103,31 @@ public class WordServiceTests {
     }
 
     @Test
+    public void analyzeFileContentsPositive(){
+        wordService = new WordService();
+        MockMultipartFile file
+                = new MockMultipartFile(
+                "TestTest",
+                "TestTest.txt",
+                MediaType.TEXT_PLAIN_VALUE,
+                "Hello world & good morning. The date is 18/05/2016".getBytes()
+        );
+
+        List<String> s = wordService.analyzeFileContents(file);
+        List<String> result = Arrays.asList("Word count = 9",
+                "Average word length = 4.556",
+                "Number of words of length 1 is 1",
+                "Number of words of length 2 is 1",
+                "Number of words of length 3 is 1",
+                "Number of words of length 4 is 2",
+                "Number of words of length 5 is 2",
+                "Number of words of length 7 is 1",
+                "Number of words of length 10 is 1",
+                "The most frequently occurring word length is 2, for word lengths of 4 & 5");
+        assertEquals(s,result);
+    }
+
+    @Test
     public void multipartToStringPositive(){
         wordService = new WordService();
         MockMultipartFile file
