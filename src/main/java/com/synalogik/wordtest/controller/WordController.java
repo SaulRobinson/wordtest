@@ -17,6 +17,7 @@ public class WordController {
     @Autowired
     private WordService wordService;
 
+    // Endpoint to collect file to analyze
     @RequestMapping(path = "/analyzeFile", method = RequestMethod.POST
             , consumes = { MediaType.MULTIPART_FORM_DATA_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<String>> analyzeFile(

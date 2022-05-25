@@ -1,5 +1,6 @@
 package com.synalogik.wordtest.service;
 
+import com.synalogik.wordtest.exception.EmptyFileException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class WordService {
-
+    // constructs the response in the format requested
     public List<String> analyzeFileContents(MultipartFile file){
         List<String> content = multipartToString(file);
         List<String> result = new ArrayList<>();
@@ -29,7 +30,8 @@ public class WordService {
         result.add(mostFrequentWordLength((wordCountWordLengthMap)));
         return result;
     }
-
+    // works out the average word length of every word in the file. Due to checking file is not empty in the multipartToString() method
+    // will not through NumberFormatException but it is tested for anyway
     String averageWordLength(Map<Integer,Integer> wordCountWordLengthMap){
         double divideBy = 0;
         double divide = 0;
@@ -41,7 +43,7 @@ public class WordService {
         BigDecimal bd = new BigDecimal(Double.toString(divide/divideBy));
         return "Average word length = "+bd.setScale(3, RoundingMode.HALF_UP);
     }
-
+    // works out the number of words present in the file
     List<String> numberOfWordsArray(Map<Integer,Integer> wordCountWordLengthMap){
         List<String> result = new ArrayList<>();
         for (Map.Entry<Integer, Integer> entry : wordCountWordLengthMap.entrySet()) {
@@ -49,7 +51,7 @@ public class WordService {
         }
         return result;
     }
-
+    // works out how many occurrences of the most frequent word lengths are present in the file
     String mostFrequentWordLength(Map<Integer,Integer> wordCountWordLengthMap){
 
         Integer highestOccurrenceCount = null;
@@ -77,20 +79,20 @@ public class WordService {
         return "The most frequently occurring word length is "+highestOccurrenceCount+", for word lengths of"+lengthsMatchingOccurrenceString.substring(2);
     }
 
+    //Converts the multipart file collected by the controller into string so the file can be analyzed checks if file is empty and throws exception if is.
     List<String> multipartToString(MultipartFile file){
         if(file.getSize() == 0){
-            //TODO Error handling
-            throw new RuntimeException();
+            throw new EmptyFileException();
         }
         try{
             String[] result = new String(file.getBytes(), StandardCharsets.UTF_8).split(" ");
             return Arrays.stream(result).map(this::removeSpecialCharacters).collect(Collectors.toList());
         }catch (IOException e){
-            //TODO Error handling
-            throw new RuntimeException();
+            throw new com.synalogik.wordtest.exception.IOException(e.getMessage());
         }
     }
 
+    //Method removes special characters but keeps the / and & symbol
     String removeSpecialCharacters(String word){
         return word.replaceAll("[^a-zA-Z0-9/&]+","");
     }
