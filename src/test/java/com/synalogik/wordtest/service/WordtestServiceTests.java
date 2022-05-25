@@ -16,32 +16,32 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(PowerMockRunner.class)
 @SpringBootTest
-public class WordServiceTests {
+public class WordtestServiceTests {
 
-    WordService wordService;
+    WordtestService wordtestService;
 
     @Test
     public void removeSpecialCharactersPositive(){
-        wordService = new WordService();
+        wordtestService = new WordtestService();
         String string = "name.";
-        string = wordService.removeSpecialCharacters(string);
+        string = wordtestService.removeSpecialCharacters(string);
         assertEquals("name", string);
     }
 
     @Test
     public void removeSpecialCharactersPreserveCharactersPositive(){
-        wordService = new WordService();
+        wordtestService = new WordtestService();
         String string1 = "&";
-        string1 = wordService.removeSpecialCharacters(string1);
+        string1 = wordtestService.removeSpecialCharacters(string1);
         String string2 = "20/04/2020";
-        string2 = wordService.removeSpecialCharacters(string2);
+        string2 = wordtestService.removeSpecialCharacters(string2);
         assertEquals("&", string1);
         assertEquals("20/04/2020", string2);
     }
 
     @Test
     public void averageWordLengthPositive(){
-        wordService = new WordService();
+        wordtestService = new WordtestService();
         Map<Integer,Integer> map = new HashMap<>();
         map.put(1,1);
         map.put(2,1);
@@ -50,20 +50,20 @@ public class WordServiceTests {
         map.put(5,2);
         map.put(7,1);
         map.put(10,1);
-        String s= wordService.averageWordLength(map);
+        String s= wordtestService.averageWordLength(map);
         assertEquals("Average word length = 4.556",s);
     }
 
     @Test(expected = NumberFormatException.class)
     public void averageWordLengthNegative(){
-        wordService = new WordService();
+        wordtestService = new WordtestService();
         Map<Integer,Integer> map = new HashMap<>();
-        wordService.averageWordLength(map);
+        wordtestService.averageWordLength(map);
     }
 
     @Test
     public void numberOfWordsArrayPositive(){
-        wordService = new WordService();
+        wordtestService = new WordtestService();
         Map<Integer,Integer> map = new HashMap<>();
         map.put(1,1);
         map.put(2,1);
@@ -73,7 +73,7 @@ public class WordServiceTests {
         map.put(7,1);
         map.put(10,1);
 
-        List<String> s = wordService.numberOfWordsArray(map);
+        List<String> s = wordtestService.numberOfWordsArray(map);
 
         List<String> result = Arrays.asList("Number of words of length 1 is 1",
                 "Number of words of length 2 is 1",
@@ -88,7 +88,7 @@ public class WordServiceTests {
 
     @Test
     public void mostFrequentWordLengthPositive(){
-        wordService = new WordService();
+        wordtestService = new WordtestService();
         Map<Integer,Integer> map = new HashMap<>();
         map.put(1,1);
         map.put(2,1);
@@ -98,13 +98,13 @@ public class WordServiceTests {
         map.put(7,1);
         map.put(10,1);
 
-        String s = wordService.mostFrequentWordLength(map);
+        String s = wordtestService.mostFrequentWordLength(map);
         assertEquals(s,"The most frequently occurring word length is 2, for word lengths of 4 & 5");
     }
 
     @Test
     public void analyzeFileContentsPositive(){
-        wordService = new WordService();
+        wordtestService = new WordtestService();
         MockMultipartFile file
                 = new MockMultipartFile(
                 "TestTest",
@@ -113,7 +113,7 @@ public class WordServiceTests {
                 "Hello world & good morning. The date is 18/05/2016".getBytes()
         );
 
-        List<String> s = wordService.analyzeFileContents(file);
+        List<String> s = wordtestService.analyzeFileContents(file);
         List<String> result = Arrays.asList("Word count = 9",
                 "Average word length = 4.556",
                 "Number of words of length 1 is 1",
@@ -129,7 +129,7 @@ public class WordServiceTests {
 
     @Test
     public void multipartToStringPositive(){
-        wordService = new WordService();
+        wordtestService = new WordtestService();
         MockMultipartFile file
                 = new MockMultipartFile(
                 "TestTest",
@@ -138,7 +138,7 @@ public class WordServiceTests {
                 "Hello world & good morning. The date is 18/05/2016".getBytes()
         );
 
-        List<String> s = wordService.multipartToString(file);
+        List<String> s = wordtestService.multipartToString(file);
 
         List<String> result = Arrays.asList("Hello"
                 ,"world"
@@ -155,7 +155,7 @@ public class WordServiceTests {
 
     @Test(expected = RuntimeException.class)
     public void multipartToStringNoFileContentNegative(){
-        wordService = new WordService();
+        wordtestService = new WordtestService();
         MockMultipartFile file
                 = new MockMultipartFile(
                 "TestTest",
@@ -164,6 +164,6 @@ public class WordServiceTests {
                 new byte[0]
         );
 
-        List<String> s = wordService.multipartToString(file);
+        List<String> s = wordtestService.multipartToString(file);
     }
 }

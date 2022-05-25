@@ -2,12 +2,20 @@ package com.synalogik.wordtest;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.web.WebApplicationInitializer;
 
 @SpringBootApplication
-public class WordtestApplication {
+public class WordtestApplication extends SpringBootServletInitializer implements WebApplicationInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(WordtestApplication.class, args);
+    }
+
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+        return builder.sources(WordtestApplication.class);
     }
 
 }

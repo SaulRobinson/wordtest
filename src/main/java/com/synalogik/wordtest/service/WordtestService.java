@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
-public class WordService {
+public class WordtestService {
     // constructs the response in the format requested
     public List<String> analyzeFileContents(MultipartFile file){
         List<String> content = multipartToString(file);

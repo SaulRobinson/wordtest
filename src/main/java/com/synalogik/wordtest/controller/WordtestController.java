@@ -1,6 +1,6 @@
 package com.synalogik.wordtest.controller;
 
-import com.synalogik.wordtest.service.WordService;
+import com.synalogik.wordtest.service.WordtestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,10 +12,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/file")
-public class WordController {
+public class WordtestController {
 
     @Autowired
-    private WordService wordService;
+    private WordtestService wordtestService;
 
     // Endpoint to collect file to analyze
     @RequestMapping(path = "/analyzeFile", method = RequestMethod.POST
@@ -23,6 +23,6 @@ public class WordController {
     public ResponseEntity<List<String>> analyzeFile(
             @RequestPart(value = "file") MultipartFile file
     ){
-        return new ResponseEntity<>(wordService.analyzeFileContents(file), HttpStatus.OK);
+        return new ResponseEntity<>(wordtestService.analyzeFileContents(file), HttpStatus.OK);
     }
 }
